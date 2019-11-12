@@ -3,7 +3,7 @@ import numpy as np
 import time
 
 f = h5py.File('vgg16_real_data.hdf5','w')
-f.create_dataset('images_train',chunks=True, maxshape=(None,7,7,512))
+f.create_dataset('images_train',chunks=True, maxshape=(None,7,7,512),dtype=float)
 
 f2 = h5py.File('vgg16_data.hdf5','r')
 images = f2['train_images']
