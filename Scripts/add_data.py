@@ -29,4 +29,26 @@ for i in img_info:
     img_list.append(i['path'])
 
 updated_img_list = img_list[82000:]
-print(len(updated_img_list))
+images = np.zeros((783,224,224,3))
+idx = 0
+for i in updated_img_list:
+    path = '../Data/'
+    path+=i
+    x = get_image(path)
+    images[idx:idx+1] = x
+
+    idx += 1
+
+img_height = 224
+img_width = 224
+base_model = VGG16(weights= 'imagenet', include_top=False, input_shape= (img_height,img_width,3))
+
+
+data = base_model.predict(images)
+
+if data.shape == (783,7,7,512):
+    f = h5py.File('vgg16_data.hdf5', 'a')
+    f['images_train'].resize(f['images_train'].shape[0] + data.shape[0], axis=0)
+    f['images_train'][-data.shape[0]:] = data
+
+    f.close()
