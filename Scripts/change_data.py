@@ -1,7 +1,7 @@
 import h5py
 import numpy as np
 import time
-
+import math
 f2 = h5py.File('vgg16_data.hdf5','r')
 images = f2['images_train']
 
@@ -14,7 +14,9 @@ images = f2['images_train']
 t = time.time()
 img = np.zeros((1000,7,7,512))
 
-for i in range(images.shape[0]-2)/1000:
+rn = int(math.ceil((images.shape[0]-2)/1000))
+print(images.shape[0], rn)
+for i in range(rn):
     s = i*1000+2
     e = min((i+1)*1000+2,images.shape[0])
     data = images[s:e,:,:,:]
