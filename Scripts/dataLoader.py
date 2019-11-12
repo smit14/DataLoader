@@ -28,7 +28,9 @@ img_list = []
 for i in img_info:
     img_list.append(i['path'])
 
-data = np.zeros((1000,7,7,512))
+nums = 10
+data = np.zeros((nums,7,7,512))
+images = np.zeros((nums,224,224,3))
 f = h5py.File('vgg16_data.hdf5','w')
 f.create_dataset('images_train', data=data[0:1,:,:,:] , chunks=True, maxshape=(None,7,7,512))
 
@@ -43,13 +45,16 @@ for i in img_list:
     path = '../Data/'
     path+=i
     x = get_image(path)
-    data[idx,:,:,:] = base_model.predict(x)[0,:,:,:]
+    images[idx:idx+1] = x
+
     idx += 1
-    if idx%1000 == 0:
+    if idx%nums == 0:
+        data[:, :, :, :] = base_model.predict(images)
         f = h5py.File('vgg16_data.hdf5', 'a')
         f['images_train'].resize(f['images_train'].shape[0] + data.shape[0], axis=0)
         f['images_train'][-data.shape[0]:] = data
         idx = 0
 
         t = time.time() - t
-        print(t / 1000)
+        print(t / nums)
+        t = time.time()
