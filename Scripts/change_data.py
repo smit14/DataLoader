@@ -3,7 +3,7 @@ import numpy as np
 import time
 
 f2 = h5py.File('vgg16_data.hdf5','r')
-images = f2['train_images']
+images = f2['images_train']
 
 temp_data = images[1:2,:,:,:]
 f = h5py.File('vgg16_real_data.hdf5','w')
