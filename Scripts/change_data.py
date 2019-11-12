@@ -12,7 +12,7 @@ f.create_dataset('images_train',data = temp_data, chunks=True, maxshape=(None,7,
 f2 = h5py.File('vgg16_data.hdf5','r')
 images = f2['images_train']
 t = time.time()
-img = np.zeros(1000,7,7,512)
+img = np.zeros((1000,7,7,512))
 
 for i in range(images.shape[0]-2)/1000:
     s = i*1000+2
