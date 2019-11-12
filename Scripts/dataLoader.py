@@ -6,7 +6,7 @@ from keras.models import load_model
 from keras.utils import np_utils
 from glob import glob
 from keras.preprocessing import image
-from keras.applications.vgg16 import VGG16
+from keras.applications.vgg16 import VGG16, preprocess_input, decode_predictions
 import time
 import json
 import h5py
