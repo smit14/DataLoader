@@ -10,7 +10,7 @@ f = h5py.File('vgg16_real_data.hdf5','w')
 f.create_dataset('images_train',data = temp_data, chunks=True, maxshape=(None,7,7,512))
 
 f2 = h5py.File('vgg16_data.hdf5','r')
-images = f2['train_images']
+images = f2['images_train']
 t = time.time()
 img = np.zeros(1000,7,7,512)
 
