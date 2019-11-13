@@ -1,6 +1,6 @@
 import h5py
 import numpy as np
-idx = 2
+idx = 0
 copied_path = './vdl_img_vgg.h5'
 fd = h5py.File(copied_path, 'r')
 
