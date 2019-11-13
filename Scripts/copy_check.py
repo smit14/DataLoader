@@ -6,7 +6,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--idx', default=0)
 opt = parser.parse_args()
 
-idx = opt.idx
+idx = int(opt.idx)
 copied_path = './vdl_img_vgg.h5'
 fd = h5py.File(copied_path, 'r')
 
