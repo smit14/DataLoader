@@ -1,8 +1,8 @@
 import h5py
 import numpy as np
 idx = 2
-copied_path = ''
-fd = h5py.File('', 'r')
+copied_path = './vdl_img_vgg.h5'
+fd = h5py.File(copied_path, 'r')
 
 imgs = fd['images_train']
 
