@@ -51,7 +51,7 @@ for i in img_list:
     idx += 1
     if idx%nums == 0:
         data = base_model.predict(images)
-        f = h5py.File('vgg16_data.hdf5', 'a')
+        f = h5py.File('vgg16_val_data.hdf5', 'a')
         f['images_val'].resize(f['images_val'].shape[0] + data.shape[0], axis=0)
         f['images_val'][-data.shape[0]:] = data
         idx = 0
@@ -61,6 +61,6 @@ for i in img_list:
         t = time.time()
 
 data = base_model(images[:idx,:,:,:])
-f = h5py.File('vgg16_data.hdf5', 'a')
+f = h5py.File('vgg16_val_data.hdf5', 'a')
 f['images_val'].resize(f['images_val'].shape[0] + data.shape[0], axis=0)
 f['images_val'][-data.shape[0]:] = data
