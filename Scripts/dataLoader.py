@@ -29,7 +29,7 @@ for i in img_info:
     s = i['path']
     img_list.append(s)
 
-nums = 100
+nums = 2000
 data = np.zeros((nums,7,7,512))
 images = np.zeros((nums,224,224,3))
 f = h5py.File('vgg16_val_data.hdf5','w')
