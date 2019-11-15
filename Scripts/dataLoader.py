@@ -32,17 +32,17 @@ for i in img_info:
 nums = 2000
 data = np.zeros((nums,7,7,512))
 images = np.zeros((nums,224,224,3))
-f = h5py.File('vgg16_val_data.hdf5','w')
-f.create_dataset('images_val', data=data[0:1,:,:,:] , chunks=True, maxshape=(None,7,7,512))
+# f = h5py.File('vgg16_val_data.hdf5','w')
+# f.create_dataset('images_val', data=data[0:1,:,:,:] , chunks=True, maxshape=(None,7,7,512))
 
 img_height = 224
 img_width = 224
 base_model = VGG16(weights= 'imagenet', include_top=False, input_shape = (img_height,img_width,3))
 
 t = time.time()
-
+img_list2 = img_list[40500:]
 idx = 0
-for i in img_list:
+for i in img_list2:
     path = '../Data/'
     path+=i
     x = get_image(path)
@@ -60,7 +60,7 @@ for i in img_list:
         print(t / nums)
         t = time.time()
 
-data = base_model(images[:idx,:,:,:])
+data = base_model.predict(images[:idx,:,:,:])
 f = h5py.File('vgg16_val_data.hdf5', 'a')
 f['images_val'].resize(f['images_val'].shape[0] + data.shape[0], axis=0)
 f['images_val'][-data.shape[0]:] = data
