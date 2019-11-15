@@ -27,8 +27,7 @@ img_info = f['img_val']
 img_list = []
 for i in img_info:
     s = i['path']
-    path = s[:13] +'train'+s[16:]
-    img_list.append(path)
+    img_list.append(s)
 
 nums = 10
 data = np.zeros((nums,7,7,512))
