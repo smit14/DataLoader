@@ -18,57 +18,48 @@ def get_image(img_path):
     x = preprocess_input(x)
     return x
 
-# file_path = '../Data/visdial_params.json'
-#
-# f = json.load(open(file_path, 'r'))
-# itow = f['itow']
-# img_info = f['img_train']
-#
-# img_list = []
-# for i in img_info:
-#     img_list.append(i['path'])
-#
-# img_list[4]
-#
-# nums = 10
-# data = np.zeros((nums,7,7,512))
-# images = np.zeros((nums,224,224,3))
-# f = h5py.File('vgg16_data.hdf5','w')
-# f.create_dataset('images_train', data=data[0:1,:,:,:] , chunks=True, maxshape=(None,7,7,512))
+file_path = '../Data/visdial_params.json'
+
+f = json.load(open(file_path, 'r'))
+itow = f['itow']
+img_info = f['img_val']
+
+img_list = []
+for i in img_info:
+    img_list.append(i['path'])
+
+nums = 10
+data = np.zeros((nums,7,7,512))
+images = np.zeros((nums,224,224,3))
+f = h5py.File('vgg16_val_data.hdf5','w')
+f.create_dataset('images_val', data=data[0:1,:,:,:] , chunks=True, maxshape=(None,7,7,512))
 
 img_height = 224
 img_width = 224
-base_model = VGG16(weights= 'imagenet', include_top=False, input_shape= (img_height,img_width,3))
+base_model = VGG16(weights= 'imagenet', include_top=False, input_shape = (img_height,img_width,3))
 
 t = time.time()
-# print('For 2014')
-path = './31738_2014.jpg'
-x = get_image(path)
-print(np.mean(x))
-y = base_model.predict(x)
-print(np.mean(y))
 
-# print('For 2017')
-# path = './332243_2017.jpg'
-# x = get_image(path)
-# print(np.mean(x))
-# y = base_model.predict(x)
-# print(np.mean(y))
-# idx = 0
-# for i in img_list:
-#     path = '../Data/'
-#     path+=i
-#     x = get_image(path)
-#     images[idx:idx+1] = x
-#
-#     idx += 1
-#     if idx%nums == 0:
-#         data[:, :, :, :] = base_model.predict(images)
-#         f = h5py.File('vgg16_data.hdf5', 'a')
-#         f['images_train'].resize(f['images_train'].shape[0] + data.shape[0], axis=0)
-#         f['images_train'][-data.shape[0]:] = data
-#         idx = 0
-#
-#         t = time.time() - t
-#         print(t / nums)
-#         t = time.time()
+idx = 0
+for i in img_list:
+    path = '../Data/'
+    path+=i
+    x = get_image(path)
+    images[idx:idx+1] = x
+
+    idx += 1
+    if idx%nums == 0:
+        data = base_model.predict(images)
+        f = h5py.File('vgg16_data.hdf5', 'a')
+        f['images_val'].resize(f['images_val'].shape[0] + data.shape[0], axis=0)
+        f['images_val'][-data.shape[0]:] = data
+        idx = 0
+
+        t = time.time() - t
+        print(t / nums)
+        t = time.time()
+
+data = base_model(images[:idx,:,:,:])
+f = h5py.File('vgg16_data.hdf5', 'a')
+f['images_val'].resize(f['images_val'].shape[0] + data.shape[0], axis=0)
+f['images_val'][-data.shape[0]:] = data
