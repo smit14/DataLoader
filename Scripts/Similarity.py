@@ -29,7 +29,7 @@ for i in range(n):
 
 indices = np.argsort(-freq)
 freq_ans = []
-k = 10000
+k = 100
 for i in range(k):
   freq_ans.append(ans[indices[i]])
 
@@ -43,7 +43,7 @@ encodings = module(
     inputs=dict(
         values=input_placeholder.values,
         indices=input_placeholder.indices,
-        dense_shape=input_placeholder.dense_shape)
+        dense_shape=input_placeholder.dense_shape))
 
 with tf.Session() as sess:
   spm_path = sess.run(module(signature="spm_path"))
