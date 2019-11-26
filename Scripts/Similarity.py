@@ -38,7 +38,7 @@ similarity_no = np.zeros(k)
 
 module = hub.load("https://tfhub.dev/google/universal-sentence-encoder-lite/2")
 
-input_placeholder = tf.sparse_placeholder(tf.int64, shape=[None, None])
+input_placeholder = tf.compat.v1.sparse_placeholder(tf.int64, shape=[None, None])
 encodings = module(
     inputs=dict(
         values=input_placeholder.values,
