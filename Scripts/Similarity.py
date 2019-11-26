@@ -36,7 +36,7 @@ for i in range(k):
 similarity_yes = np.zeros(k)
 similarity_no = np.zeros(k)
 
-module = hub.Module("https://tfhub.dev/google/universal-sentence-encoder-lite/2")
+module = hub.load("https://tfhub.dev/google/universal-sentence-encoder-lite/2")
 
 input_placeholder = tf.sparse_placeholder(tf.int64, shape=[None, None])
 encodings = module(
